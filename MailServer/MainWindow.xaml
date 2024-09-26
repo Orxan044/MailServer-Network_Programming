@@ -4,9 +4,40 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailServer"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="460" Width="800">
+    
+    
     <Grid>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel>
+
+            <StackPanel  Height="80" Orientation="Horizontal" >
+
+                <Image Height="60" Source="pack://application:,,,/MailServer;component/Images/gmailLogo.png" Margin="0 10 0 20" Width="61" ></Image>
+                <TextBlock Text="Gmail" FontSize="25" Padding="0 0 0 0" FontWeight="Bold" Height="36" ></TextBlock>
+
+            </StackPanel>
+
+            <Button x:Name="BtnCompose" Height="40" Margin="5" Background="YellowGreen" FontSize="20" Click="BtnCompose_Click" >Compose</Button>
+
+            <Button x:Name="BtnInbox"  Height="30" FontSize="20"  Margin="3 4" Click="BtnInbox_Click">Inbok</Button>
+            <Button x:Name="BtnStarred" Height="30" FontSize="20" Margin="3 0">Startted</Button>
+            <Button x:Name="BtnSent" Height="30" FontSize="20" Margin="3 4">Sent</Button>
+            <Button x:Name="BtnDrafts" Height="30" FontSize="20" Margin="3 0">Drafts</Button>
+
+        </StackPanel>
+        
+        <ListBox x:Name="ListBoxMails" Height="420" VerticalAlignment="Bottom" Grid.Column="1">
+
+        </ListBox>
+        
     </Grid>
+
+    
 </Window>
