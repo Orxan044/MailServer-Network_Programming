@@ -9,7 +9,8 @@ namespace MailServer;
 
 public partial class MainWindow : Window
 {
-   // private Imap _imap = new();
+    private Imap _imap = new();
+
     public MainWindow()
     {
         InitializeComponent();
@@ -17,68 +18,93 @@ public partial class MainWindow : Window
 
     private void BtnCompose_Click(object sender, RoutedEventArgs e)
     {
-
-    }
-
-
-
-
-    private void Compose()
-    {
-
+        var window = new ComposeWindow();
+        window.ShowDialog();
     }
 
     private async void BtnInbox_Click(object sender, RoutedEventArgs e)
     {
-        //Task.Run(() => 
-        //{
-        //    //Dispatcher.Invoke(() => { ListBoxMails.Items.Clear(); });
 
-        //    if (_imap is null) return;
+        var folder = _imap.ImapClient!.GetFolder("Inbox");
+        await folder.OpenAsync(FolderAccess.ReadOnly);
 
-        //    var messages = _imap.GetInbox();
-
-        //    foreach ( var message in messages )
-        //    {
-        //        Dispatcher.Invoke(() => { ListBoxMails.Items.Add(message); });
-        //    }
-        //});
-
-        var _imap = new ImapClient();
-        _imap.Connect("imap.gmail.com", 993);
-        _imap.Authenticate("logmanquliyev33@gmail.com", "rykn paby iqnf madd");
-
-
-
-        var inbox = _imap!.GetFolder("Inbox");
-        inbox.Open(FolderAccess.ReadOnly);
-
-        var ids = inbox.Search(SearchQuery.All);
-
-        //IList<string> messages = [];
+        var ids = await folder.SearchAsync(SearchQuery.All);
 
         foreach (var id in ids)
         {
-            ListBoxMails.Items.Add(await inbox.GetMessageAsync(id));
+            var message = await folder.GetMessageAsync(id);
+            var post = new Post()
+            {
+                From = message.From.ToString(),
+                Subject = message.Subject.ToString()
+            };
+
+            ListBoxMails.Items.Add(post);
+
         }
-
-
-        //var inbox = _imap!.GetFolder("Inbox");
-        //inbox.Open(FolderAccess.ReadOnly);
-
-        //var ids = inbox.Search(SearchQuery.All);
-
-        //foreach (var id in ids)
-        //{
-        //    var message = inbox.GetMessage(id).Subject;
-        //    Dispatcher.Invoke(() => { ListBoxMails.Items.Add(message); });
-        //}
-
-        //var messages = _imap.GetInbox();
-
-        //foreach (var message in messages)
-        //{
-        //}
     }
- 
+
+    private async void BtnStarred_Click(object sender, RoutedEventArgs e)
+    {
+        var folder = _imap.ImapClient!.GetFolder(SpecialFolder.Flagged);
+        await folder.OpenAsync(FolderAccess.ReadOnly);
+
+        var ids = await folder.SearchAsync(SearchQuery.All);
+
+        foreach (var id in ids)
+        {
+            var message = await folder.GetMessageAsync(id);
+            var post = new Post()
+            {
+                From = message.From.ToString(),
+                Subject = message.Subject.ToString()
+            };
+
+            ListBoxMails.Items.Add(post);
+
+        }
+    }
+
+    private async void BtnSent_Click(object sender, RoutedEventArgs e)
+    {
+        ListBoxMails.Items.Clear();
+        var folder = _imap.ImapClient!.GetFolder(SpecialFolder.Sent);
+        await folder.OpenAsync(FolderAccess.ReadOnly);
+
+        var ids = await folder.SearchAsync(SearchQuery.All);
+
+        foreach (var id in ids)
+        {
+            var message = await folder.GetMessageAsync(id);
+            var post = new Post()
+            {
+                From = message.From.ToString(),
+                Subject = message.Subject.ToString()
+            };
+
+            ListBoxMails.Items.Add(post);
+
+        }
+    }
+
+    private async void BtnDrafts_Click(object sender, RoutedEventArgs e)
+    {
+        var folder = _imap.ImapClient!.GetFolder(SpecialFolder.Drafts);
+        await folder.OpenAsync(FolderAccess.ReadOnly);
+
+        var ids = await folder.SearchAsync(SearchQuery.All);
+
+        foreach (var id in ids)
+        {
+            var message = await folder.GetMessageAsync(id);
+            var post = new Post()
+            {
+                From = message.From.ToString(),
+                Subject = message.Subject.ToString()
+            };
+
+            ListBoxMails.Items.Add(post);
+
+        }
+    }
 }

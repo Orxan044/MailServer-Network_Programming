@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailServer"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="460" Width="800">
+        Title="MainWindow" Height="480" Width="820">
     
     
     <Grid>
@@ -27,13 +27,13 @@
             <Button x:Name="BtnCompose" Height="40" Margin="5" Background="YellowGreen" FontSize="20" Click="BtnCompose_Click" >Compose</Button>
 
             <Button x:Name="BtnInbox"  Height="30" FontSize="20"  Margin="3 4" Click="BtnInbox_Click">Inbok</Button>
-            <Button x:Name="BtnStarred" Height="30" FontSize="20" Margin="3 0">Startted</Button>
-            <Button x:Name="BtnSent" Height="30" FontSize="20" Margin="3 4">Sent</Button>
-            <Button x:Name="BtnDrafts" Height="30" FontSize="20" Margin="3 0">Drafts</Button>
+            <Button x:Name="BtnStarred" Height="30" FontSize="20" Margin="3 0" Click="BtnStarred_Click">Startted</Button>
+            <Button x:Name="BtnSent" Height="30" FontSize="20" Margin="3 4" Click="BtnSent_Click">Sent</Button>
+            <Button x:Name="BtnDrafts" Height="30" FontSize="20" Margin="3 0" Click="BtnDrafts_Click">Drafts</Button>
 
         </StackPanel>
         
-        <ListBox x:Name="ListBoxMails" Height="420" VerticalAlignment="Bottom" Grid.Column="1">
+        <ListBox x:Name="ListBoxMails" Height="420" Width="580"  Grid.Column="1">
 
         </ListBox>
         
